@@ -15,7 +15,7 @@ Project page: http://www.wisdom.weizmann.ac.il/~vision/kernelgan/
 ### Quick usage on your data:  
 To run KernelGAN on all images in <input_image_path>:
 
-``` python train.py --input-dir <input_image_path> ```
+``` python train.py --X4 --input-dir <input_image_path> ```
 
 
 This will produce kernel estimations in the results folder
