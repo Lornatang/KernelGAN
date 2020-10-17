@@ -17,7 +17,7 @@ class Config:
         # Sizes
         self.parser.add_argument('--input_crop_size', type=int, default=64, help='Generators crop size')
         self.parser.add_argument('--scale_factor', type=float, default=0.5, help='The downscaling scale factor')
-        self.parser.add_argument('--X4', action='store_true', help='The wanted SR scale factor')
+        self.parser.add_argument('--4x', action='store_true', help='The wanted SR scale factor')
 
         # Network architecture
         self.parser.add_argument('--G_chan', type=int, default=64, help='# of channels in hidden layer in the G')
@@ -52,7 +52,7 @@ class Config:
         self.clean_file_name()
         self.set_output_directory()
         self.conf.G_structure = [7, 5, 3, 1, 1, 1]
-        print("Scale Factor: %s \tZSSR: %s \tReal Image: %s" % (('X4' if self.conf.X4 else 'X2'), str(self.conf.do_ZSSR), str(self.conf.real_image)))
+        print("Scale Factor: %s \tZSSR: %s \tReal Image: %s" % (('4x' if self.conf.4x else '2x'), str(self.conf.do_ZSSR), str(self.conf.real_image)))
         return self.conf
 
     def clean_file_name(self):
