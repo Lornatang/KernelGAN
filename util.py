@@ -167,7 +167,7 @@ def nn_interpolation(im, sf):
 
 
 def analytic_kernel(k):
-    """Calculate the X4 kernel from the X2 kernel (for proof see appendix in paper)"""
+    """Calculate the 4x kernel from the 2x kernel (for proof see appendix in paper)"""
     k_size = k.shape[0]
     # Calculate the big kernels size
     big_k = np.zeros((3 * k_size - 2, 3 * k_size - 2))
@@ -212,7 +212,7 @@ def kernel_shift(kernel, sf):
 def save_final_kernel(k_2, conf):
     """saves the final kernel and the analytic kernel to the results folder"""
     sio.savemat(os.path.join(conf.output_dir_path, '%s_kernel_2x.mat' % conf.img_name), {'Kernel': k_2})
-    if conf.X4:
+    if conf.x4:
         k_4 = analytic_kernel(k_2)
         sio.savemat(os.path.join(conf.output_dir_path, '%s_kernel_4x.mat' % conf.img_name), {'Kernel': k_4})
 
@@ -221,8 +221,8 @@ def run_zssr(k_2, conf):
     """Performs ZSSR with estimated kernel for wanted scale factor"""
     if conf.do_ZSSR:
         start_time = time.time()
-        print('~' * 30 + '\nRunning ZSSR X%d...' % (4 if conf.X4 else 2))
-        if conf.X4:
+        print('~' * 30 + '\nRunning ZSSR X%d...' % (4 if conf.x4 else 2))
+        if conf.x4:
             sr = ZSSR(conf.input_image_path, scale_factor=[[2, 2], [4, 4]], kernels=[k_2, analytic_kernel(k_2)], is_real_img=conf.real_image, noise_scale=conf.noise_scale).run()
         else:
             sr = ZSSR(conf.input_image_path, scale_factor=2, kernels=[k_2], is_real_img=conf.real_image, noise_scale=conf.noise_scale).run()
